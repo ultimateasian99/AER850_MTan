@@ -85,14 +85,14 @@ model.add(MaxPooling2D(pool_size=(2,2)))
 #classification layers of NN architecture
 model.add(Flatten())                              # convert to 1d vector
 
-model.add(Dense(32,activation='relu',kernel_regularizer=l2(0.0001)))           
+model.add(Dense(64,activation='elu',kernel_regularizer=l2(0.0001)))           
 model.add(Dropout(0.3))
 model.add(Dense(3,activation='softmax'))
 
 
 #compile model
 model.compile(
-    optimizer = Adam(0.001),          
+    optimizer = Adam(0.0001),          
     loss = 'categorical_crossentropy',             
     metrics = ['accuracy']
 )
@@ -101,7 +101,7 @@ print(model.summary())
 #training mi model
 history = model.fit(
     train_generator,
-    epochs = 10,                    #originally 50
+    epochs = 15,        
     validation_data=valid_generator
 )
 
