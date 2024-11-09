@@ -101,7 +101,7 @@ print(model.summary())
 #training mi model
 history = model.fit(
     train_generator,
-    epochs = 15,        
+    epochs = 25,        
     validation_data=valid_generator
 )
 
