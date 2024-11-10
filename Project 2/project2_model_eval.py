@@ -5,10 +5,10 @@ from keras._tf_keras.keras.models import load_model
 import os
 import matplotlib.pyplot as plt
 
+#STEP 5
 
 #Load the saved Keras model
 loaded_model = load_model('mymodel.keras')
-
 
 img_height = 500
 img_width = 500
@@ -27,7 +27,7 @@ specific_images = {
     "paint-off": "test_paintoff.jpg",
 }
 
-# Build `image_paths` by finding the specified image in each class subfolder
+# Building image_paths to find the specified image in each class subfolder
 image_paths = {}
 for class_name, image_name in specific_images.items():
     class_folder = os.path.join(train_data_dir, class_name)
@@ -49,7 +49,7 @@ def predict_and_display_image(img_path, model, class_labels, true_label):
     # Predict the class probabilities
     predictions = model.predict(img_array)[0]  # Get prediction probabilities for each class
 
-    # Get the predicted class with the highest probability
+    # Get the predicted class with the highest probability, since softmax was used
     predicted_index = np.argmax(predictions)
     predicted_label = class_labels[predicted_index]
 

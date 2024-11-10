@@ -24,7 +24,7 @@ batchsize = 32
 
 # Relative directory paths
 train_data_dir = 'Data/train'
-valid_data_dir = 'Data/valid'
+valid_data_dir = 'Data/test'
 
 # data augmentation for training and validation
 if K.image_data_format() == 'channels_first':
@@ -36,8 +36,9 @@ else:
 # data generator and augmentation
 train_datagen = ImageDataGenerator(
     rescale = 1./255,
-    shear_range = 0.2, 
-    zoom_range = 0.2
+    zoom_range= 0.2,
+    rotation_range = 15,
+    horizontal_flip = True
 )
 
 test_datagen = ImageDataGenerator(
@@ -54,9 +55,7 @@ train_generator = train_datagen.flow_from_directory(
 )
 
 valid_datagen = ImageDataGenerator(
-    rescale = 1./255,
-    shear_range = 0.2, 
-    zoom_range = 0.2
+    rescale = 1./255
 )
 
 valid_generator = valid_datagen.flow_from_directory(
@@ -73,7 +72,11 @@ model = Sequential()
 
 #feature learning layers of NN architecure
 #model.add(Input(shape=input_shape))
+
 model.add(Conv2D(32, (3, 3), activation='relu', input_shape=input_shape))  
+model.add(MaxPooling2D(pool_size=(2,2)))
+
+model.add(Conv2D(64,(3,3),activation='relu'))
 model.add(MaxPooling2D(pool_size=(2,2)))
 
 model.add(Conv2D(64,(3,3),activation='relu'))
@@ -82,11 +85,18 @@ model.add(MaxPooling2D(pool_size=(2,2)))
 model.add(Conv2D(128,(3,3),activation='relu'))
 model.add(MaxPooling2D(pool_size=(2,2)))
 
+model.add(Conv2D(256,(3,3),activation='relu'))  
+model.add(MaxPooling2D(pool_size=(2,2)))
+
 #classification layers of NN architecture
 model.add(Flatten())                              # convert to 1d vector
 
 model.add(Dense(64,activation='elu',kernel_regularizer=l2(0.0001)))           
 model.add(Dropout(0.3))
+
+model.add(Dense(64,activation='elu',kernel_regularizer=l2(0.001)))           
+model.add(Dropout(0.3))
+
 model.add(Dense(3,activation='softmax'))
 
 
