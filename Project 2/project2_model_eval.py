@@ -13,8 +13,8 @@ loaded_model = load_model('mymodel.keras')
 img_height = 500
 img_width = 500
 
-# Define the path to the training directory where the class subfolders are located
-train_data_dir = 'Data/test'  # Replace with your training data directory
+# Define the relative path to the training directory 
+train_data_dir = 'Data/test' 
 
 # Automatically retrieve class labels from subfolder names in the training directory
 class_labels = {i: class_name for i, class_name in enumerate(sorted(os.listdir(train_data_dir)))}
@@ -43,8 +43,8 @@ print("Image paths for evaluation:", image_paths)
 def predict_and_display_image(img_path, model, class_labels, true_label):
     # Load and preprocess the image
     img = load_img(img_path, target_size=(img_height, img_width))
-    img_array = img_to_array(img) / 255.0  # Normalize as done in training
-    img_array = np.expand_dims(img_array, axis=0)  # Add batch dimension
+    img_array = img_to_array(img) / 255.0  # Normalize 
+    img_array = np.expand_dims(img_array, axis=0)  
 
     # Predict the class probabilities
     predictions = model.predict(img_array)[0]  # Get prediction probabilities for each class
